@@ -1,0 +1,34 @@
+<h2>Todos page</h2>
+{{!-- Пишем логику хэндлбарса в которой проверяем длинну массива Todos --}}
+{{!-- Если в массиве что то есть то перебираем массив и делаем рендер каждого элемента --}}
+{{#if todos.length}} 
+<ul>
+    {{!-- Начало аналога forEach относительно массива todos При каждой итерации создается <li></li> и структура --}}
+{{#each todos}} 
+<li class="todo">
+    <form action="/complete" method="POST">
+<label>
+    {{#if completed}}
+    {{!-- Если true то на чекбоксе сразу ставим флаг checked --}}
+    <input type="checkbox" checked name="completed">
+    {{!-- У каждого todo есть title и прочее поэтому при итерации просто передаем значение в разметку --}}
+    <span class="completed">{{title}}</span>
+    {{else}}
+    <input type="checkbox" name="completed">
+    <span>{{title}}</span>
+    {{/if}}   
+{{!-- для того чтобы передавать форму с конкретным id при нажатии кнопки берем его значение из value _id --}}
+{{!-- по значению поля name передаем в функцию findById req.body.id поле по которому нужно искать --}}
+    <input type="hidden" value="{{_id}}" name="id"> 
+
+    <button class="btn btn-small" type="submit">Save</button>
+</label>
+</form>
+</li>
+{{!-- Завершение аналога forEach относительно массива todos --}}
+{{/each}} 
+</ul>
+{{!-- Если массив пустой выводим сообщение Todos нету вместе с разметкой --}}
+{{else}}   
+<p>No todos</p>
+{{/if}} 
